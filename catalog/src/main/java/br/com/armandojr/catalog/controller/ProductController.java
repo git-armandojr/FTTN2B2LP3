@@ -2,6 +2,7 @@ package br.com.armandojr.catalog.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -89,13 +90,13 @@ public class ProductController {
 		return productDAL.getProductFeature(productId, key);
 	}
 	
-	@RequestMapping(value = "/features/{productId}/{key}/{value}", method = RequestMethod.GET)
-	public String addProductFeature(@PathVariable Iterable<String> productId, @PathVariable String key, @PathVariable String value) {
-		Product product = (Product) productRepository.findAllById(productId);
+	
+	@RequestMapping(value = "/features/{productId}/{key}/{value}", method = RequestMethod.PUT)
+	public String addProductFeature(@PathVariable String productId, @PathVariable String key, @PathVariable String value) {
+		Optional<Product> product = productRepository.findById(productId);
 		
 		if (product != null) {
-			((Product) product).getProductFeatures().put(key, value);
-			productRepository.save(product);
+			productDAL.addProductFeature(productId, key, value);
 			return "Key added.";
 		} else {
 			return "Product not found.";
