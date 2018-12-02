@@ -102,4 +102,17 @@ public class ProductController {
 			return "Product not found.";
 		}
 	}
+	
+	@RequestMapping(value = "/{productId}",  method = RequestMethod.DELETE)
+	public String delProductById(@PathVariable String productId) {
+		Optional<Product> product = productRepository.findById(productId);
+		
+		if (product != null) {
+			productDAL.delProductById(productId);
+			return "Product removed.";
+		} else {
+			return "Product not found.";
+		}
+		
+	}
 }

@@ -65,4 +65,17 @@ public class ProductDALImpl implements ProductDAL{
 		}
 	}
 
+	@Override
+	public String delProductById(String productId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("productId").is(productId));
+		Product product = mongoTemplate.findOne(query, Product.class);
+		
+		if (product != null) {
+			mongoTemplate.remove(product);
+			return "Product removed.";
+		} else {
+			return "Product not found.";
+		}
+	}
 }

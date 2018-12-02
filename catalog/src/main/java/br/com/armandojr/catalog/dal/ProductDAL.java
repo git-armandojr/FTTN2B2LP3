@@ -18,4 +18,6 @@ public interface ProductDAL {
 	
 	String addProductFeature(String productId, String key, String value);
 	
+	String delProductById(String product);
+	
 }
